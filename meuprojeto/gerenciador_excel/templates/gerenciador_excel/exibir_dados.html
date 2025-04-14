@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Visualizar Dados{% endblock %}
+{% block header %}Dados do Arquivo Excel{% endblock %}
+{% block content %}
+    <div>
+        {{ dados_html|safe }}
+    </div>
+
+    <h2>Remover Coluna</h2>
+    <form method="post" action="{% url 'remover_coluna' %}">
+        {% csrf_token %}
+        <label for="coluna_remover">Selecione a coluna para remover:</label>
+        <select name="coluna_remover" id="coluna_remover">
+            {% for coluna in colunas %}
+                <option value="{{ coluna }}">{{ coluna }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Remover</button>
+    </form>
+
+    <p><a href="{% url 'exportar_excel' %}">Exportar para Excel</a></p>
+    <p><a href="{% url 'upload_arquivo' %}">Carregar outro arquivo</a></p>
+{% endblock %}
